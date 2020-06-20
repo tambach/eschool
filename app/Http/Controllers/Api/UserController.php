@@ -57,11 +57,7 @@ class UserController extends BaseController
         return UserResource::collection($userQuery->paginate($limit));
     }
 
-    public function getUsers()
-    {
-        //return User::all();
-        return response()->download(public_path('upload/პროექტის-საბოლოო-ანგარიში.docx'));
-    }
+
 
     /**
      * Store a newly created resource in storage.

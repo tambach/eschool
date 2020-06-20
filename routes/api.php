@@ -40,13 +40,13 @@ Route::namespace('Api')->group(function() {
         Route::put('users/{user}/permissions', 'UserController@updatePermissions')->middleware('permission:' .Acl::PERMISSION_PERMISSION_MANAGE);
         Route::get('roles/{role}/permissions', 'RoleController@permissions')->middleware('permission:' . Acl::PERMISSION_PERMISSION_MANAGE);
     });
-
-
-    Route::get('getusers/get', 'UserController@getUsers');
-
-
-
 });
+
+
+Route::get('books/{file}', 'BookController@download');
+Route::post('books/get', 'BookController@getBooks');
+
+
 
 Route::post('/courses', 'CoursesController@getList');
 Route::post('/courses/add', 'CoursesController@add');
