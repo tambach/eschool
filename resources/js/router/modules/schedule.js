@@ -6,6 +6,7 @@ const scheduleRouter = {
   component: Layout,
   redirect: 'schedule',
   name: 'ცხრილი',
+  roles: ['teacher', 'student'],
   meta: {
     title: 'ცხრილი',
     icon: 'table',

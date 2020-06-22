@@ -9,15 +9,14 @@ const homeworkRouter = {
   meta: {
     title: 'დავალება',
     icon: 'documentation',
-    roles: ['editor', 'teacher', 'student'],
+    roles: ['teacher', 'student'],
   },
   children: [
     {
       path: 'index',
       component: () => import('@/views/homework/index'),
       name: 'form',
-      meta: { title: 'დავალება', icon: 'documentation',
-      },
+      meta: { 'title': 'დავალება', 'icon': 'documentation' },
     },
     {
       path: 'create',

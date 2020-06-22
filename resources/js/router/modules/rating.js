@@ -9,7 +9,7 @@ const ratingRouter = {
   meta: {
     title: 'შეფასება',
     icon: 'chart',
-    roles: ['editor', 'teacher', 'student'],
+    roles: ['teacher', 'student'],
     permissions: [
       {
         role: 'admin',
@@ -23,12 +23,6 @@ const ratingRouter = {
       component: () => import('@/views/rating/index'),
       name: 'rating',
       meta: { title: 'შეფასება', icon: 'chart', roles: ['editor', 'teacher'],
-        permissions: [
-          {
-            role: 'admin',
-            access: false,
-            redirect: 'login',
-          }],
       },
     },
   ],

@@ -143,7 +143,7 @@ export default {
             });
         },
         getsubject() {
-          console.log(this.userid)
+          // console.log(this.userid);
           axios
             .post('api/rating/subjects', { user_id: this.userid })
             .then(response => {

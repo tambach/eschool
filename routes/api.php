@@ -47,6 +47,9 @@ Route::get('books/{file}', 'BookController@download');
 Route::post('books/get', 'BookController@getBooks');
 
 
+Route::get('articles/get', 'NewsController@getAll');
+Route::post('articles/byid', 'NewsController@getById');
+
 
 Route::post('/courses', 'CoursesController@getList');
 Route::post('/courses/add', 'CoursesController@add');

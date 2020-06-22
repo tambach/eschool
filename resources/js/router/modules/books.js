@@ -9,13 +9,13 @@ const booksRouter = {
   meta: {
     title: 'წიგნები',
     icon: 'education',
-    roles: ['editor', 'teacher', 'student'],
+    roles: ['teacher', 'student'],
   },
   children: [
     {
       path: 'index',
       component: () => import('@/views/book/index'),
-      name: 'form',
+      name: 'books',
       meta: { title: 'წიგნები', icon: 'education',
       },
     },

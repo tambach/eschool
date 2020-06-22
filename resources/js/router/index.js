@@ -20,6 +20,7 @@ import scheduleRouter from './modules/schedule';
 import ratingRouter from './modules/rating';
 import homeworkRouter from './modules/homework';
 import booksRouter from './modules/books';
+import newsRouter from './modules/news';
 /**
  * Sub-menu only appear when children.length>=1
  * @see https://doc.laravue.dev/guide/essentials/router-and-nav.html
@@ -89,6 +90,7 @@ export const constantRoutes = [
       },
     ],
   },
+  newsRouter,
   scheduleRouter,
   ratingRouter,
   homeworkRouter,

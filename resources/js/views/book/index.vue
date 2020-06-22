@@ -12,10 +12,10 @@
                 <el-tabs v-model="activeName">
                   <el-tab-pane label="სასწავლო სახელმძღვანელოები" name="first">
                     <transition-group tag="main" name="card">
-                      <article v-for="(book, index) in albums" :key="index" class="card">
+                      <article v-for="book in albums" :key="book.id" class="card">
                         <a :href="`api/books/${book.file}`" target="_blank">
                           <img v-if="book.cover !== ''" :src="`/upload/imgs/${book.cover}`" :alt="book.name" width="200px" height="300px">
-                          <img v-else src="https://source.unsplash.com/random/300x300" :alt="book.name" >
+                          <img v-else src="https://source.unsplash.com/random/300x300" :alt="book.name">
                           <div class="description">
                             <span class="playcount">
                               <span :style="{width: m_percentage(748) + '%'}" />
@@ -28,12 +28,12 @@
                       </article>
                     </transition-group>
                   </el-tab-pane>
-                  <el-tab-pane label="დამატებითი ლიტერატურა" name="second" >
+                  <el-tab-pane label="დამატებითი ლიტერატურა" name="second">
                     <transition-group tag="main" name="card">
-                      <article v-for="(book, index) in albums" :key="index" class="card">
+                      <article v-for="book in albums" :key="book.id" class="card">
                         <a :href="`api/books/${book.file}`" target="_blank">
                           <img v-if="book.cover !== ''" :src="`/upload/imgs/${book.cover}`" :alt="book.name" width="200px" height="300px">
-                          <img v-else src="https://source.unsplash.com/random/300x300" :alt="book.name" >
+                          <img v-else src="https://source.unsplash.com/random/300x300" :alt="book.name">
                           <div class="description">
                             <span class="playcount">
                               <span :style="{width: m_percentage(748) + '%'}" />
