@@ -5,18 +5,18 @@ const scheduleRouter = {
   path: '/schedule',
   component: Layout,
   redirect: 'schedule',
-  name: 'ცხრილი',
+  name: 'timetable',
   roles: ['teacher', 'student'],
   meta: {
-    title: 'ცხრილი',
+    title: 'timetable',
     icon: 'table',
   },
   children: [
     {
       path: 'index',
       component: () => import('@/views/schedule/index'),
-      name: 'ცხრილი',
-      meta: { title: 'ცხრილი', icon: 'table' },
+      name: 'timetable',
+      meta: { title: 'timetable', icon: 'table' },
     },
   ],
 };

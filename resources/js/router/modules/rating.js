@@ -7,7 +7,7 @@ const ratingRouter = {
   redirect: 'rating',
   name: 'rating',
   meta: {
-    title: 'შეფასება',
+    title: 'rating',
     icon: 'chart',
     roles: ['teacher', 'student'],
     permissions: [
@@ -22,7 +22,7 @@ const ratingRouter = {
       path: 'index',
       component: () => import('@/views/rating/index'),
       name: 'rating',
-      meta: { title: 'შეფასება', icon: 'chart', roles: ['editor', 'teacher'],
+      meta: { title: 'rating', icon: 'chart', roles: ['editor', 'teacher'],
       },
     },
   ],

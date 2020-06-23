@@ -7,7 +7,7 @@ const booksRouter = {
   redirect: 'books',
   name: 'books',
   meta: {
-    title: 'წიგნები',
+    title: 'books',
     icon: 'education',
     roles: ['teacher', 'student'],
   },
@@ -16,7 +16,7 @@ const booksRouter = {
       path: 'index',
       component: () => import('@/views/book/index'),
       name: 'books',
-      meta: { title: 'წიგნები', icon: 'education',
+      meta: { title: 'books', icon: 'education',
       },
     },
   ],

@@ -7,7 +7,7 @@ const newsRouter = {
   redirect: 'news',
   name: 'news',
   meta: {
-    title: 'სიახლეები',
+    title: 'news',
     roles: ['teacher', 'student'],
   },
   children: [
@@ -15,13 +15,13 @@ const newsRouter = {
       path: 'index',
       component: () => import('@/views/news/index'),
       name: 'news',
-      meta: { 'title': 'სიახლეები', 'icon': 'excel' },
+      meta: { 'title': 'news', 'icon': 'excel' },
     },
     {
       path: 'show/:id',
       component: () => import('@/views/news/show'),
       name: 'newsshow',
-      meta: { 'title': 'სიახლეები', 'icon': 'excel' },
+      meta: { 'title': 'news', 'icon': 'excel' },
       hidden: true,
     },
   ],

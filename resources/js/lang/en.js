@@ -1,6 +1,11 @@
 export default {
   route: {
     dashboard: 'Dashboard',
+    news: 'news',
+    timetable: 'timetable',
+    rating: 'rating',
+    homework: 'homework',
+    books: 'books',
     introduction: 'Introduction',
     documentation: 'Documentation',
     guide: 'Guide',

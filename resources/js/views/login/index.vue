@@ -32,10 +32,10 @@
           Sign in
         </el-button>
       </el-form-item>
-      <div class="tips">
-        <span style="margin-right:20px;">Email: admin@laravue.dev</span>
-        <span>Password: laravue</span>
-      </div>
+      <!--      <div class="tips">-->
+      <!--        <span style="margin-right:20px;">Email: admin@laravue.dev</span>-->
+      <!--        <span>Password: laravue</span>-->
+      <!--      </div>-->
     </el-form>
   </div>
 </template>
@@ -65,8 +65,10 @@ export default {
     };
     return {
       loginForm: {
-        email: 'admin@laravue.dev',
-        password: 'laravue',
+        // email: 'admin@laravue.dev',
+        // password: 'laravue',
+        email: '',
+        password: '',
       },
       loginRules: {
         email: [{ required: true, trigger: 'blur', validator: validateEmail }],

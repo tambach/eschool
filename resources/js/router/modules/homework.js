@@ -7,7 +7,7 @@ const homeworkRouter = {
   redirect: 'homework',
   name: 'homework',
   meta: {
-    title: 'დავალება',
+    title: 'homework',
     icon: 'documentation',
     roles: ['teacher', 'student'],
   },
@@ -16,7 +16,7 @@ const homeworkRouter = {
       path: 'index',
       component: () => import('@/views/homework/index'),
       name: 'form',
-      meta: { 'title': 'დავალება', 'icon': 'documentation' },
+      meta: { 'title': 'homework', 'icon': 'documentation' },
     },
     {
       path: 'create',
