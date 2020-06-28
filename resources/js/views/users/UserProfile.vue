@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="6">
           <user-card :user="user" />
-          <user-bio />
+          <!--          <user-bio />-->
         </el-col>
         <el-col :span="18">
           <user-activity :user="user" />
@@ -16,14 +16,14 @@
 
 <script>
 import Resource from '@/api/resource';
-import UserBio from './components/UserBio';
+// import UserBio from './components/UserBio';
 import UserCard from './components/UserCard';
 import UserActivity from './components/UserActivity';
 
 const userResource = new Resource('users');
 export default {
   name: 'EditUser',
-  components: { UserBio, UserCard, UserActivity },
+  components: { UserCard, UserActivity },
   data() {
     return {
       user: {},

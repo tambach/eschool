@@ -9,11 +9,7 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">
-          OOPS!
-        </div>
-        <div class="bullshit__info">
-          Copyright by
-          <a class="link-type" href="https://github.com/tuandm/laravue" target="_blank">Laravue</a>
+          Sorry
         </div>
         <div class="bullshit__headline">
           {{ message }}
@@ -33,7 +29,7 @@ export default {
   name: 'Page404',
   computed: {
     message() {
-      return 'The bodyguard said that you can\'t enter this page...';
+      return 'You cannot acces this page';
     },
   },
 };

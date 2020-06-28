@@ -8,7 +8,8 @@ const permissionRoutes = {
   meta: {
     title: 'permission',
     icon: 'lock',
-    permissions: ['view menu permission'],
+    roles: ['admin'],
+    // permissions: ['view menu permission'],
   },
   children: [
     {

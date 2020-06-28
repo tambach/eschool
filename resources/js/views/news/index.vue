@@ -12,7 +12,7 @@
               {{ article.description.substring(0,100)+"..." }}
             </p>
             <router-link :to="{ name: 'newsshow', params: { id: article.id }}">
-              <el-button type="primary" size="small" >
+              <el-button type="primary" size="small">
                 სრულად
               </el-button>
             </router-link>

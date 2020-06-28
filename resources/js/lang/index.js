@@ -10,7 +10,6 @@ import ruLocale from './ru';
 import kaLocale from './ka';
 import frLocale from './fr';
 
-
 Vue.use(VueI18n);
 
 const messages = {

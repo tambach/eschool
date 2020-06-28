@@ -7,7 +7,7 @@ Vue.use(Router);
 import Layout from '@/layout';
 
 /* Router for modules */
-import elementUiRoutes from './modules/element-ui';
+// import elementUiRoutes from './modules/element-ui';
 import componentRoutes from './modules/components';
 import chartsRoutes from './modules/charts';
 import tableRoutes from './modules/table';
@@ -96,19 +96,20 @@ export const constantRoutes = [
   homeworkRouter,
   booksRouter,
 
-  {
-    path: '/documentation',
-    component: Layout,
-    redirect: '/documentation/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', noCache: true },
-      },
-    ],
-  },
+  // {
+  //   path: '/documentation',
+  //   component: Layout,
+  //   redirect: '/documentation/index',
+  //   meta: { roles: ['admin'] },
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: 'documentation', icon: 'documentation', noCache: true },
+  //     },
+  //   ],
+  // },
   {
     path: '/profile',
     component: Layout,
@@ -135,7 +136,7 @@ export const constantRoutes = [
       },
     ],
   },
-  elementUiRoutes,
+  // elementUiRoutes,
 ];
 
 export const asyncRoutes = [
@@ -149,6 +150,7 @@ export const asyncRoutes = [
     path: '/theme',
     component: Layout,
     redirect: 'noredirect',
+    meta: { roles: ['admin'] },
     children: [
       {
         path: 'index',
@@ -162,13 +164,13 @@ export const asyncRoutes = [
     path: '/clipboard',
     component: Layout,
     redirect: 'noredirect',
-    meta: { permissions: ['view menu clipboard'] },
+    meta: { roles: ['admin'] },
     children: [
       {
         path: 'index',
         component: () => import('@/views/clipboard/index'),
         name: 'ClipboardDemo',
-        meta: { title: 'clipboardDemo', icon: 'clipboard', roles: ['admin', 'manager', 'editor', 'user'] },
+        meta: { title: 'clipboardDemo', icon: 'clipboard', roles: ['admin', 'editor', 'user'] },
       },
     ],
   },
@@ -179,7 +181,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/zip/download',
     alwaysShow: true,
-    meta: { title: 'zip', icon: 'zip', permissions: ['view menu zip'] },
+    meta: { title: 'zip', icon: 'zip', roles: ['admin'] },
     children: [
       {
         path: 'download',
@@ -193,7 +195,7 @@ export const asyncRoutes = [
     path: '/pdf',
     component: Layout,
     redirect: '/pdf/index',
-    meta: { title: 'pdf', icon: 'pdf', permissions: ['view menu pdf'] },
+    meta: { title: 'pdf', icon: 'pdf', roles: ['admin'] },
     children: [
       {
         path: 'index',
@@ -211,7 +213,7 @@ export const asyncRoutes = [
   {
     path: '/i18n',
     component: Layout,
-    meta: { permissions: ['view menu i18n'] },
+    meta: { roles: ['admin'] },
     children: [
       {
         path: 'index',
@@ -224,6 +226,7 @@ export const asyncRoutes = [
   {
     path: '/external-link',
     component: Layout,
+    meta: { roles: ['admin'] },
     children: [
       {
         path: 'https://github.com/tuandm/laravue',

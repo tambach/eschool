@@ -12,7 +12,7 @@ export default {
     permission: 'უფლებები',
     pagePermission: 'გვერდის უფლებები',
     rolePermission: 'როლის უფლებები',
-    directivePermission: 'დირეცტივები',
+    directivePermission: 'დირექტივები',
     icons: 'სიმბოლოები',
     components: 'კომპონენტები',
     componentIndex: 'შესავალი',
@@ -74,7 +74,7 @@ export default {
     elementUi: 'Element UI',
     administrator: 'ადმინისტრატორი',
     users: 'მომხმარებლები',
-    userProfile: 'მომხმარებლის პროფილი',
+    userProfile: 'პროფილი',
   },
   navbar: {
     logOut: 'გასვლა',

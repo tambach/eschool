@@ -2,7 +2,7 @@
   <el-card v-if="user.name">
     <div class="user-profile">
       <div class="user-avatar box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />
+        <pan-thumb image="/images/images.jpeg" src="/images/images.jpeg" :height="'100px'" :width="'100px'" :hoverable="false" />
       </div>
       <div class="box-center">
         <div class="user-name text-center">
@@ -14,19 +14,15 @@
       </div>
       <div class="box-social">
         <el-table :data="social" :show-header="false">
-          <el-table-column prop="name" label="Name" />
-          <el-table-column label="Count" align="left" width="100">
-            <template slot-scope="scope">
-              {{ scope.row.count | toThousandFilter }}
-            </template>
-          </el-table-column>
+          <el-table-column prop="name" label="" />
+          <el-table-column prop="value" label="" />
         </el-table>
       </div>
-      <div class="user-follow">
-        <el-button type="primary" style="width: 100%;">
-          Follow
-        </el-button>
-      </div>
+      <!--      <div class="user-follow">-->
+      <!--        <el-button type="primary" style="width: 100%;">-->
+      <!--          Follow-->
+      <!--        </el-button>-->
+      <!--      </div>-->
     </div>
   </el-card>
 </template>
@@ -43,7 +39,7 @@ export default {
         return {
           name: '',
           email: '',
-          avatar: '',
+          avatar: '/images/images.jpeg',
           roles: [],
         };
       },
@@ -53,16 +49,12 @@ export default {
     return {
       social: [
         {
-          'name': 'Followers',
-          'count': 1235,
+          'name': 'Class',
+          'value': 'VI',
         },
         {
-          'name': 'Following',
-          'count': 23512,
-        },
-        {
-          'name': 'Friends',
-          'count': 7242,
+          'name': 'Teacher',
+          'value': 'teacher123',
         },
       ],
     };
