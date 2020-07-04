@@ -1,4 +1,5 @@
 const path = require('path');
+// eslint-disable-next-line no-unused-vars
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -13,7 +14,7 @@ function resolve(dir) {
 const rawArgv = process.argv.slice(2);
 const args = rawArgv.join(' ');
 const report = rawArgv.includes('--report');
-let plugins = [];
+const plugins = [];
 if (report) {
   plugins.push(new BundleAnalyzerPlugin({
     openAnalyzer: true,

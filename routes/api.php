@@ -49,6 +49,8 @@ Route::post('books/get', 'BookController@getBooks');
 
 Route::get('articles/get', 'NewsController@getAll');
 Route::post('articles/byid', 'NewsController@getById');
+Route::post('news/create', 'NewsController@addNews');
+Route::post('news/upload', 'NewsController@upload');
 
 
 Route::post('/courses', 'CoursesController@getList');
@@ -76,9 +78,13 @@ Route::post('/schedule/get', 'ScheduleController@getList');
 
 Route::post('/rating/get', 'RatingController@getList');
 Route::post('/rating/subjects', 'RatingController@getUserLessons');
+Route::post('/rating/average', 'RatingController@getAverage');
+
 
 Route::post('/homework/get', 'HomeWorkController@getList');
 Route::post('/homework/upload', 'HomeWorkController@uploadFile');
+Route::post('/homework/post', 'HomeWorkController@postHomeWork');
+Route::post('/homework/getbyid', 'HomeWorkController@filesbyid');
 
 
 

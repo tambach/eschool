@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-radio-group v-model="lang" size="small">
-          <el-radio label="vi" border>
+          <el-radio label="fr" border>
             Tiếng Việt
           </el-radio>
           <el-radio label="en" border>
@@ -16,7 +16,7 @@
           <el-radio label="ru" border>
             Русский
           </el-radio>
-          <el-radio label="zh" border>
+          <el-radio label="ka" border>
             简体中文
           </el-radio>
         </el-radio-group>
@@ -127,7 +127,7 @@ export default {
   created() {
     if (!this.$i18n.getLocaleMessage('en')[viewName]) {
       this.$i18n.mergeLocaleMessage('en', local.en);
-      this.$i18n.mergeLocaleMessage('ru', local.ru);
+      this.$i18n.mergeLocaleMessage('ka', local.ru);
       this.$i18n.mergeLocaleMessage('zh', local.zh);
       this.$i18n.mergeLocaleMessage('vi', local.vi);
     }

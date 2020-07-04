@@ -15,10 +15,11 @@ class CreateTableHomeworkFiles extends Migration
     {
         Schema::create('homework_files', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('filename');
-            $table->string('mime');
-            $table->string('path');
+            $table->string('filename')->nullable();
+            $table->string('mime')->nullable();
+            $table->string('path')->nullable();
             $table->integer('size')->nullable();
+            $table->text('text')->nullable();
 
 
             $table->unsignedInteger('student_id');

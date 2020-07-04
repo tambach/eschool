@@ -5,10 +5,6 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
-            <div class="card-header">
-              Calendar
-            </div>
-
             <div class="card-body">
               <div class="col-md-12">
                 <el-table max-height="800" :data="tableData" :header-cell-style="tableHeaderColor" style="width: 100%" :row-class-name="tableRowClassName">
@@ -67,29 +63,14 @@ export default {
               console.log(error);
             });
         },
-        load(tree, treeNode, resolve) {
-          setTimeout(() => {
-            resolve([
-              {
-                id: 31,
-                Time: '2016-05-01',
-                name: 'wangxiaohu',
-              }, {
-                id: 32,
-                Time: '2016-05-01',
-                name: 'wangxiaohu',
-              },
-            ]);
-          }, 1000);
-        },
 
         tableHeaderColor({ row, column, rowIndex, columnIndex }) {
           if (rowIndex === 0) {
-            return 'background-color: #ebf1fb;color: #496fec;font-weight:600;font-size:16px;text-align:center';
+            return 'background-color: #ebf1fb;color: #496fec;font-weight:600;font-size:16px;';
           } else if (rowIndex === 1) {
-            return 'background-color: #f7faff;font-size:14px;text-align:center';
+            return 'background-color: #f7faff;font-size:14px;';
           } else if (rowIndex === 2) {
-            return 'background-color: #f7faff;font-size:14px;text-align:center';
+            return 'background-color: #f7faff;font-size:14px;';
           }
         },
         tableRowClassName({ row, rowIndex }) {

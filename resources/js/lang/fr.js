@@ -1,6 +1,18 @@
 export default {
   route: {
     dashboard: 'tableau de bord',
+    title: 'titre',
+    view: 'voir',
+    manager: 'gestionnaire',
+    description: 'description',
+    Math: 'Math',
+    History: 'Histoire',
+    Chemistry: 'Chimie',
+    English: 'Anglais',
+    Literature: 'Littérature',
+    French: 'Français',
+    Biology: 'Biologie',
+    addhomework: 'Ajoutez des devoirs',
     news: 'Nouvelles',
     timetable: 'Calendrier',
     rating: 'Evaluation',

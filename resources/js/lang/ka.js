@@ -1,6 +1,18 @@
 export default {
   route: {
     dashboard: 'დაფა',
+    title: 'სათაური',
+    view: 'ნახვა',
+    description: 'აღწერა',
+    Math: 'მათემატიკა',
+    History: 'ისტორია',
+    Chemistry: 'ქიმია',
+    English: 'ინგლისური',
+    Literature: 'ლიტერატურა',
+    French: 'ფრანგული',
+    Biology: 'ბიოლოგია',
+    addhomework: 'დაამატეთ დავალება',
+    manager: 'მენეჯერი',
     news: 'სიახლეები',
     timetable: 'ცხრილი',
     rating: 'შეფასება',

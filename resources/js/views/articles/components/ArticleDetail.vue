@@ -2,9 +2,6 @@
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
       <sticky :class-name="'sub-navbar '+postForm.status">
-        <CommentDropdown v-model="postForm.comment_disabled" />
-        <PlatformDropdown v-model="postForm.platforms" />
-        <SourceUrlDropdown v-model="postForm.source_uri" />
         <el-button
           v-loading="loading"
           style="margin-left: 10px;"
@@ -13,91 +10,57 @@
         >
           Submit
         </el-button>
-        <el-button v-loading="loading" type="warning" @click="draftForm">
-          Draft
-        </el-button>
       </sticky>
 
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
-              <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
+              <MDinput v-model="postForm.filename" :maxlength="100" name="name" required>
                 Title
               </MDinput>
             </el-form-item>
 
-            <div class="postInfo-container">
-              <el-row>
-                <el-col :span="8">
-                  <el-form-item label-width="80px" label="Author:" class="postInfo-container-item">
-                    <el-select
-                      v-model="postForm.author"
-                      :remote-method="getRemoteUserList"
-                      filterable
-                      remote
-                      placeholder="Search user"
-                    >
-                      <el-option
-                        v-for="(item,index) in userListOptions"
-                        :key="item+index"
-                        :label="item"
-                        :value="item"
-                      />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="10">
-                  <el-form-item
-                    label-width="120px"
-                    label="Published date:"
-                    class="postInfo-container-item"
-                  >
-                    <el-date-picker
-                      v-model="postForm.display_time"
-                      type="datetime"
-                      format="yyyy-MM-dd HH:mm:ss"
-                      placeholder="Select date and time"
-                    />
-                  </el-form-item>
-                </el-col>
-
-                <el-col :span="6">
-                  <el-form-item
-                    label-width="80px"
-                    label="Important:"
-                    class="postInfo-container-item"
-                  >
-                    <el-rate
-                      v-model="postForm.importance"
-                      :max="3"
-                      :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-                      :low-threshold="1"
-                      :high-threshold="3"
-                      style="margin-top:8px;"
-                    />
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </div>
+            <!--            <div class="postInfo-container">-->
+            <!--              <el-row>-->
+            <!--                <el-col :span="8">-->
+            <!--                  <el-form-item label-width="80px" label="Author:" class="postInfo-container-item">-->
+            <!--                    <el-select-->
+            <!--                      v-model="postForm.author"-->
+            <!--                      :remote-method="getRemoteUserList"-->
+            <!--                      filterable-->
+            <!--                      remote-->
+            <!--                      placeholder="Search user"-->
+            <!--                    >-->
+            <!--                      <el-option-->
+            <!--                        v-for="(item,index) in userListOptions"-->
+            <!--                        :key="item+index"-->
+            <!--                        :label="item"-->
+            <!--                        :value="item"-->
+            <!--                      />-->
+            <!--                    </el-select>-->
+            <!--                  </el-form-item>-->
+            <!--                </el-col>-->
+            <!--                <el-col :span="10">-->
+            <!--                  <el-form-item-->
+            <!--                    label-width="120px"-->
+            <!--                    label="Date:"-->
+            <!--                    class="postInfo-container-item"-->
+            <!--                  >-->
+            <!--                    <el-date-picker-->
+            <!--                      v-model="postForm.display_time"-->
+            <!--                      type="datetime"-->
+            <!--                      format="yyyy-MM-dd HH:mm:ss"-->
+            <!--                      placeholder="Select date and time"-->
+            <!--                    />-->
+            <!--                  </el-form-item>-->
+            <!--                </el-col>-->
+            <!--              </el-row>-->
+            <!--            </div>-->
           </el-col>
         </el-row>
-
-        <el-form-item style="margin-bottom: 40px;" label-width="80px" label="Summary:">
-          <el-input
-            v-model="postForm.content_short"
-            :rows="1"
-            type="textarea"
-            class="article-textarea"
-            autosize
-            placeholder="Please enter the content"
-          />
-          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }} word</span>
-        </el-form-item>
-
         <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.content" :height="400" />
+          <Tinymce ref="editor" v-model="postForm.mime" :height="400" />
         </el-form-item>
 
         <el-form-item prop="image_uri" style="margin-bottom: 30px;">
@@ -114,13 +77,14 @@ import Upload from '@/components/Upload/SingleImage';
 import MDinput from '@/components/MDinput';
 import Sticky from '@/components/Sticky'; // Sticky header
 import { validURL } from '@/utils/validate';
-import { fetchArticle } from '@/api/article';
+// import { fetchArticle } from '@/api/article';
 import { userSearch } from '@/api/search';
-import {
-  CommentDropdown,
-  PlatformDropdown,
-  SourceUrlDropdown,
-} from './Dropdown';
+import axios from 'axios';
+// import {
+//   CommentDropdown,
+//   PlatformDropdown,
+//   SourceUrlDropdown,
+// } from './Dropdown';
 
 const defaultForm = {
   status: 'draft',
@@ -143,9 +107,9 @@ export default {
     MDinput,
     Upload,
     Sticky,
-    CommentDropdown,
-    PlatformDropdown,
-    SourceUrlDropdown,
+    // CommentDropdown,
+    // PlatformDropdown,
+    // SourceUrlDropdown,
   },
   props: {
     isEdit: {
@@ -215,31 +179,39 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id)
-        .then(response => {
-          this.postForm = response.data;
-          // Just for test
-          this.postForm.title += `   Article Id:${this.postForm.id}`;
-          this.postForm.content_short += `   Article Id:${this.postForm.id}`;
+      // fetchArticle(id)
+      //   .then(response => {
+      //     this.postForm = response.data;
+      //     // Just for test
+      //     this.postForm.title += `   Article Id:${this.postForm.id}`;
+      //     this.postForm.content_short += `   Article Id:${this.postForm.id}`;
+      //
+      //     // Set tagsview title
+      //     this.setTagsViewTitle();
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
 
-          // Set tagsview title
-          this.setTagsViewTitle();
-        })
-        .catch(err => {
-          console.log(err);
+      axios.post('api/homework/getbyid', { id: id })
+        .then(response => {
+          this.postForm = response.data.file;
+          console.log(response.data.file);
+        }).catch(error => {
+          console.log(error);
         });
     },
     setTagsViewTitle() {
-      const title =
-        this.lang === 'zh'
-          ? '编辑文章'
-          : this.lang === 'vi'
-            ? 'Chỉnh sửa'
-            : 'Edit Article'; // Should move to i18n
-      const route = Object.assign({}, this.tempRoute, {
-        title: `${title}-${this.postForm.id}`,
-      });
-      this.$store.dispatch('updateVisitedView', route);
+      // const title =
+      //   this.lang === 'zh'
+      //     ? '编辑文章'
+      //     : this.lang === 'vi'
+      //       ? 'Chỉnh sửa'
+      //       : 'Edit Article'; // Should move to i18n
+      // const route = Object.assign({}, this.tempRoute, {
+      //   title: `${title}-${this.postForm.id}`,
+      // });
+      // this.$store.dispatch('updateVisitedView', route);
     },
     submitForm() {
       this.postForm.display_time = parseInt(this.display_time / 1000);

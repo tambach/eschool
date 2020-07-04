@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Laravue\Models\User;
 use App\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RatingController extends Controller
 {
@@ -27,6 +28,21 @@ class RatingController extends Controller
         $average = $user->rating->pluck('grade')->avg();
 
         return response(['data' => $lessons, 'average' => $average], 200);
+
+    }
+
+    public function getAverage(Request $request)
+    {
+        $user_id   = $request['user_id'];
+
+        $average = DB::table('rating')
+            ->select('lesson_id', 'lessons.name', DB::raw('round(AVG(grade), 1) as grade'), DB::raw('round(RAND()*(100-1)+1, 0) as attendance'))
+            ->join('lessons', 'rating.lesson_id', '=', 'lessons.id')
+            ->where('user_id', $user_id)
+            ->groupBy('lesson_id')
+            ->get();
+
+        return response(['data' => $average ], 200);
 
     }
 }

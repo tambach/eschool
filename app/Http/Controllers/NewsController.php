@@ -19,4 +19,38 @@ class NewsController extends Controller
         $article = Article::find($id);
         return response(['data' => $article ], 200);
     }
+
+    public function addNews(Request $request)
+    {
+        $image = $request->file;
+        $fileExt = time().'.'.$image->getClientOriginalName();
+        $request->file->move('upload/imgs/', $fileExt);
+
+//        $filename = $request->file->getClientOriginalName();
+//        $path = hash( 'sha256', time());
+        if($request->file)
+        {
+            $input['cover'] = $fileExt;
+            $input['title'] = $request->title;
+            $input['description'] = $request->text;
+            $input['user_id'] = $request->user_id;
+
+            $file = Article::create($input);
+
+            return response()->json([
+                'success' => true,
+                'id' => $file->id
+            ], 200);
+        }
+        return response()->json([
+            'success' => false
+        ], 500);
+    }
+
+    public function upload(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
 }

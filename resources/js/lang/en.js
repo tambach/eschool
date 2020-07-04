@@ -1,6 +1,18 @@
 export default {
   route: {
     dashboard: 'Dashboard',
+    title: 'title',
+    description: 'description',
+    view: 'view',
+    manager: 'manager',
+    Math: 'Math',
+    History: 'History',
+    Chemistry: 'Chemistry',
+    English: 'English',
+    Literature: 'Literature',
+    French: 'French',
+    Biology: 'Biology',
+    addhomework: 'add homework',
     news: 'news',
     timetable: 'timetable',
     rating: 'rating',

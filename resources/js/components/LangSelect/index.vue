@@ -18,11 +18,30 @@
 </template>
 
 <script>
+import local from '@/views/i18n/local';
+const viewName = 'i18nView';
 export default {
   computed: {
     language() {
       return this.$store.getters.language;
     },
+    lang: {
+      get() {
+        return this.$store.state.app.language;
+      },
+      set(lang) {
+        this.$i18n.locale = lang;
+        this.$store.dispatch('app/setLanguage', lang);
+      },
+    },
+  },
+  created() {
+    if (!this.$i18n.getLocaleMessage('en')[viewName]) {
+      this.$i18n.mergeLocaleMessage('en', local.en);
+      this.$i18n.mergeLocaleMessage('ru', local.fr);
+      this.$i18n.mergeLocaleMessage('zh', local.ka);
+    }
+    this.setOptions(); // set default select options
   },
   methods: {
     handleSetLanguage(lang) {

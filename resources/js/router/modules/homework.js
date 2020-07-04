@@ -19,10 +19,17 @@ const homeworkRouter = {
       meta: { 'title': 'homework', 'icon': 'documentation' },
     },
     {
-      path: 'create',
+      path: 'create/:id(\\d+)',
       component: () => import('@/views/homework/create'),
       name: 'CreateHomeWork',
       meta: { title: 'createHomeWork', icon: 'edit' },
+      hidden: true,
+    },
+    {
+      path: 'edit/:id(\\d+)',
+      component: () => import('@/views/articles/Edit'),
+      name: 'EditArticle',
+      meta: { title: 'editArticle', noCache: true },
       hidden: true,
     },
   ],

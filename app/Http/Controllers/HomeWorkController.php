@@ -19,6 +19,26 @@ class HomeWorkController extends Controller
 //        $hw = $lesson->homework->sortByDesc('created_at')->take(1)->get();
 
         $hw = Homework::where('lesson_id', $lesson_id)->orderBy('created_at', 'DESC')->limit(1)->get();
+
+        $hww = Homework::where('lesson_id', $lesson_id)->orderBy('created_at', 'DESC')->first();
+
+        $file = HomeWorkFiles::where('student_id',$user_id)->where('homework_id', $hww->id)->first();
+
+        if($file)
+        {
+            return response()->json([
+                'status' => 1,
+                'id' => $file->id,
+                'hw' =>$hw,
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 0,
+                'hw' =>$hw,
+            ], 200);
+        }
+
 //        $files = HomeWorkFiles::where('homework_id', $hw->id)->orderBy('created_at', 'DESC')->first();
 //
 //        if(file_exists(public_path('upload') . '/591903063.pages' ))
@@ -26,7 +46,6 @@ class HomeWorkController extends Controller
 //            return Response::download(public_path('upload') . '/591903063.pages' );
 //        }
 
-        return response(['hw' =>$hw], 200);
     }
 
     public function uploadFile(Request $request)
@@ -56,6 +75,31 @@ class HomeWorkController extends Controller
         return response()->json([
             'success' => false
         ], 500);
+    }
+
+    public function postHomeWork(Request $request)
+    {
+        $input['mime'] = $request->text;
+        $input['filename'] = $request->title;
+        $input['student_id'] = $request->userid;
+        $input['homework_id'] = $request->hwid;
+
+        $file = HomeWorkFiles::create($input);
+
+        return response()->json([
+            'success' => true,
+            'id' => $request->text
+        ], 200);
+    }
+
+    public function filesbyid(Request $request)
+    {
+        $id = $request->id;
+        $file = HomeWorkFiles::find($id);
+
+        return response()->json([
+            'file' => $file
+        ], 200);
     }
 
     public function getFiles()

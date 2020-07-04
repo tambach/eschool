@@ -23,39 +23,39 @@
 
             <div class="postInfo-container">
               <el-row>
-                <el-col :span="8">
-                  <el-form-item label-width="80px" label="Author:" class="postInfo-container-item">
-                    <el-select
-                      v-model="postForm.author"
-                      :remote-method="getRemoteUserList"
-                      filterable
-                      remote
-                      placeholder="Search user"
-                    >
-                      <el-option
-                        v-for="(item,index) in userListOptions"
-                        :key="item+index"
-                        :label="item"
-                        :value="item"
-                      />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
+                <!--                <el-col :span="8">-->
+                <!--                  <el-form-item label-width="80px" label="Author:" class="postInfo-container-item">-->
+                <!--                    <el-select-->
+                <!--                      v-model="postForm.author"-->
+                <!--                      :remote-method="getRemoteUserList"-->
+                <!--                      filterable-->
+                <!--                      remote-->
+                <!--                      placeholder="Search user"-->
+                <!--                    >-->
+                <!--                      <el-option-->
+                <!--                        v-for="(item,index) in userListOptions"-->
+                <!--                        :key="item+index"-->
+                <!--                        :label="item"-->
+                <!--                        :value="item"-->
+                <!--                      />-->
+                <!--                    </el-select>-->
+                <!--                  </el-form-item>-->
+                <!--                </el-col>-->
 
-                <el-col :span="10">
-                  <el-form-item
-                    label-width="120px"
-                    label="Published date:"
-                    class="postInfo-container-item"
-                  >
-                    <el-date-picker
-                      v-model="postForm.display_time"
-                      type="datetime"
-                      format="yyyy-MM-dd HH:mm:ss"
-                      placeholder="Select date and time"
-                    />
-                  </el-form-item>
-                </el-col>
+                <!--                <el-col :span="10">-->
+                <!--                  <el-form-item-->
+                <!--                    label-width="120px"-->
+                <!--                    label="Published date:"-->
+                <!--                    class="postInfo-container-item"-->
+                <!--                  >-->
+                <!--                    <el-date-picker-->
+                <!--                      v-model="postForm.display_time"-->
+                <!--                      type="datetime"-->
+                <!--                      format="yyyy-MM-dd HH:mm:ss"-->
+                <!--                      placeholder="Select date and time"-->
+                <!--                    />-->
+                <!--                  </el-form-item>-->
+                <!--                </el-col>-->
 
                 <el-col :span="6" />
               </el-row>
@@ -63,8 +63,8 @@
           </el-col>
         </el-row>
 
-        <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.content" :height="400" />
+        <el-form-item prop="text" style="margin-bottom: 30px;">
+          <Tinymce ref="editor" v-model="postForm.text" :height="400" />
         </el-form-item>
 
         <el-form-item prop="image_uri" style="margin-bottom: 30px;">
@@ -77,17 +77,18 @@
 
 <script>
 import Tinymce from '@/components/Tinymce';
-import Upload from '@/components/Upload/SingleImage';
+import Upload from '@/components/Upload/homework';
 import MDinput from '@/components/MDinput';
 import Sticky from '@/components/Sticky'; // Sticky header
-import { validateURL } from '@/utils/validate';
+// import { validateURL } from '@/utils/validate';
 import { fetchArticle } from '@/api/article';
+import axios from 'axios';
 // import { userSearch } from '@/api/remoteSearch';
 
 const defaultForm = {
   status: 'draft',
   title: '',
-  content: '',
+  text: '',
   content_short: '',
   source_uri: '',
   image_uri: '',
@@ -96,6 +97,8 @@ const defaultForm = {
   platforms: ['a-platform'],
   comment_disabled: false,
   importance: 0,
+  hwid: '',
+  userid: '',
 };
 
 export default {
@@ -124,30 +127,13 @@ export default {
         callback();
       }
     };
-    const validateSourceUri = (rule, value, callback) => {
-      if (value) {
-        if (validateURL(value)) {
-          callback();
-        } else {
-          this.$message({
-            message: 'External URL is invalid.',
-            type: 'error',
-          });
-          callback(new Error('External URL is invalid.'));
-        }
-      } else {
-        callback();
-      }
-    };
     return {
       postForm: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
       rules: {
-        image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
-        content: [{ validator: validateRequire }],
-        source_uri: [{ validator: validateSourceUri, trigger: 'blur' }],
+        // content: [{ validator: validateRequire }],
       },
       tempRoute: {},
     };
@@ -159,18 +145,13 @@ export default {
     lang() {
       return this.$store.getters.language;
     },
+    userid() {
+      return this.$store.getters.userId;
+    },
   },
   created() {
-    if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id;
-      this.fetchData(id);
-    } else {
-      this.postForm = Object.assign({}, defaultForm);
-    }
-
-    // Why need to make a copy of this.$route here?
-    // Because if you enter this page and quickly switch tag, may be in the execution of the setTagsViewTitle function, this.$route is no longer pointing to the current page
-    this.tempRoute = Object.assign({}, this.$route);
+    const id = this.$route.params && this.$route.params.id;
+    this.postForm.hwid = id;
   },
   methods: {
     fetchData(id) {
@@ -201,14 +182,21 @@ export default {
       this.$store.dispatch('updateVisitedView', route);
     },
     submitForm() {
-      this.postForm.display_time = parseInt(this.display_time / 1000);
+      this.postForm.userid = this.userid;
       console.log(this.postForm);
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true;
+          axios.post('api/homework/post', this.postForm)
+            .then(response => {
+              console.log(response.data);
+            }).catch(error => {
+              console.log(error);
+            });
+
           this.$notify({
             title: 'Success',
-            message: 'Article has been published successfully',
+            message: 'Home work has been uploaded successfully',
             type: 'success',
             duration: 2000,
           });
@@ -222,7 +210,7 @@ export default {
     },
     draftForm() {
       if (
-        this.postForm.content.length === 0 ||
+        this.postForm.text.length === 0 ||
           this.postForm.title.length === 0
       ) {
         this.$message({
