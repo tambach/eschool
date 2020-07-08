@@ -35,7 +35,6 @@
         :visible.sync="dialogVisible"
         width="60%"
       >
-
         <el-upload
           list-type="picture-card"
           action="api/news/upload"

@@ -42,19 +42,27 @@ export default {
     userid() {
       return this.$store.getters.userId;
     },
+    role() {
+      return this.$store.getters.roles;
+    },
   },
   mounted() {
     // console.log('Component mounted.');
   },
   created() {
     // this.getCourseList();
+    console.log('fck u');
     this.getTimeTable();
   },
   methods:
       {
         getTimeTable() {
-          axios
-            .post('api/schedule/get', { user_id: this.userid })
+          let url = 'api/schedule/get';
+          if (this.role.includes('admin')) {
+            url = 'api/schedule/teacher';
+          }
+          console.log(url);
+          axios.post(url, { user_id: 2 })
             .then(response => {
               console.log(response.data);
               this.tableData = Object.values(response.data.data);

@@ -50,6 +50,46 @@ class ScheduleController extends Controller
         return response(['data' => $calendarData, 'count' => $count, 'tmrange'=>$lessons], 200);
     }
 
+    public function getTeacherList(Request $request)
+    {
+        $count = 0;
+        $user_id   = $request['user_id'];
+        $lessons = Lesson::where('teacher_id', $user_id)->get();
+
+        $timeRange = $this->generateTimeRange(config('app.calendar.start_time'), config('app.calendar.end_time'));
+        $weekDays     = Lesson::WEEK_DAYS;
+        //return response(['data' => $lessons, 'count' => $count], 200);
+
+        $time_index = 0;
+        foreach ($timeRange as $time)
+        {
+            $timeText = $time['start'] . ' - ' . $time['end'];
+            $calendarData[$timeText] = [];
+
+            foreach ($weekDays as $index => $day)
+            {
+                $lesson = $lessons->where('weekday', $index)->where('start', '>=', $time['start'])->where('end', '<=', $time['end'])->first();
+
+                if ($lesson)
+                {
+                    $teacher = User::find($lesson->teacher_id);
+                    $count++;
+                    $calendarData[$timeText]['time'] = $timeText;
+                    $calendarData[$timeText][$day] = $lesson->class_id  .' კლასი';
+                    $calendarData[$timeText]['teacher'] = $teacher->name .', '. $teacher->name;
+                }
+                else
+                {
+                    $calendarData[$timeText]['time'] = $timeText;
+                    $calendarData[$timeText][$day] = '';
+                }
+            }
+            $time_index++;
+        }
+
+        return response(['data' => $calendarData, 'count' => $count, 'tmrange'=>$lessons], 200);
+    }
+
     public function generateTimeRange($from, $to)
     {
         $time = Carbon::parse($from);

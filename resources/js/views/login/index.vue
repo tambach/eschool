@@ -20,7 +20,7 @@
           :type="pwdType"
           name="password"
           auto-complete="on"
-          placeholder="password"
+          :placeholder="$t('login.password')"
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
@@ -29,7 +29,7 @@
       </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          Sign in
+          {{ $t('login.title') }}
         </el-button>
       </el-form-item>
       <!--      <div class="tips">-->

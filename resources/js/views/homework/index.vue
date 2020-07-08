@@ -9,7 +9,6 @@
 
             <div class="card-body">
               <div id="app">
-                <p>{{ generateTitle('dashboard') }}</p>
 
                 <el-tabs type="border-card" @tab-click="getHomeWork">
                   <el-tab-pane v-for="tab in lessons" :key="tab.id" :label="generateTitle(tab.name)">
@@ -21,7 +20,7 @@
                       <!--                          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>-->
                       <!--                        </template>-->
                       <!--                      </el-table-column>-->
-                      <el-table-column v-if="status == 0" align="center" label="Action">
+                      <el-table-column v-if="status == 0" align="center" :label="generateTitle('action')">
                         <template slot-scope="scope">
                           <router-link :to="'/homework/create/' + scope.row.id">
                             <el-button type="primary" size="small" icon="el-icon-edit">{{ generateTitle('addhomework') }}</el-button>
@@ -37,10 +36,8 @@
                           </router-link>
                         </template>
                       </el-table-column>
-                      <el-table-column label="შეფასება" prop="grade" align="center" />
-
+                      <el-table-column :label="generateTitle('grade')" prop="grade" align="center" />
                     </el-table>
-
                   </el-tab-pane>
                 </el-tabs>
 

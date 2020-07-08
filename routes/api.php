@@ -75,10 +75,14 @@ Route::post('/scores', 'StudentsController@updateScores');
 Route::post('/scores/get', 'StudentsController@getScores');
 
 Route::post('/schedule/get', 'ScheduleController@getList');
+Route::post('/schedule/teacher', 'ScheduleController@getTeacherList');
 
 Route::post('/rating/get', 'RatingController@getList');
 Route::post('/rating/subjects', 'RatingController@getUserLessons');
 Route::post('/rating/average', 'RatingController@getAverage');
+Route::post('/rating/class', 'RatingController@getClasses');
+Route::post('rating/lessons','RatingController@getLessonByClass');
+Route::post('/rating/getAll', 'RatingController@getAllScores');
 
 
 Route::post('/homework/get', 'HomeWorkController@getList');

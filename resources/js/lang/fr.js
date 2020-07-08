@@ -1,10 +1,13 @@
 export default {
   route: {
-    dashboard: 'tableau de bord',
+    dashboard: 'Tableau de bord',
     title: 'titre',
     view: 'voir',
     manager: 'gestionnaire',
-    description: 'description',
+    date: 'Date',
+    description: 'Description',
+    action: 'Action',
+    grade: 'Note',
     Math: 'Math',
     History: 'Histoire',
     Chemistry: 'Chimie',
@@ -86,7 +89,7 @@ export default {
     elementUi: 'Element UI',
     administrator: 'Administrator',
     users: 'Users',
-    userProfile: 'User Profile',
+    userProfile: 'Profil de l\'utilisateur',
   },
   navbar: {
     logOut: 'Déconnexion',
@@ -97,7 +100,7 @@ export default {
     profile: 'Profil',
   },
   login: {
-    title: 'Formulaire de connexion',
+    title: 'Connexion',
     logIn: 'Connexion',
     username: 'nom d\'utilisateur',
     password: 'mot de passe',

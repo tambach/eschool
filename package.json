@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^5.0.1",
+    "@fullcalendar/interaction": "^5.1.0",
     "@fullcalendar/vue": "^5.0.0",
     "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
@@ -75,6 +76,7 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^3.1.0",
+    "pdf-image": "^2.0.0",
     "screenfull": "^4.2.1",
     "sortablejs": "^1.10.2",
     "tui-editor": "^1.4.6",
@@ -85,6 +87,7 @@
     "vue-i18n": "^8.18.2",
     "vue-loader": "^15.9.2",
     "vue-moment": "^4.1.0",
+    "vue-poll": "^0.1.8",
     "vue-router": "^3.3.4",
     "vue-router-permissions": "^0.1.5",
     "vue-router-user-roles": "^0.1.92",

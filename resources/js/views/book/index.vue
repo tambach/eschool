@@ -11,6 +11,11 @@
               <div id="app">
                 <el-tabs v-model="activeName">
                   <el-tab-pane label="სასწავლო სახელმძღვანელოები" name="first">
+                    <el-row v-if="role.includes('admin') || role.includes('teacher')" style="margin-bottom:30px;">
+                      <el-button type="primary" size="medium" icon="el-icon-plus" @click="bookVisible=true">
+                        {{ generateTitle('Add') }}
+                      </el-button>
+                    </el-row>
                     <transition-group tag="main" name="card">
                       <article v-for="book in albums" :key="book.id" class="card">
                         <a :href="`api/books/${book.file}`" target="_blank">
@@ -29,6 +34,11 @@
                     </transition-group>
                   </el-tab-pane>
                   <el-tab-pane label="დამატებითი ლიტერატურა" name="second">
+                    <el-row v-if="role.includes('admin') || role.includes('teacher')" style="margin-bottom:30px;">
+                      <el-button type="primary" size="medium" icon="el-icon-plus" @click="additionalVisible=true">
+                        {{ generateTitle('Add') }}
+                      </el-button>
+                    </el-row>
                     <transition-group tag="main" name="card">
                       <article v-for="book in albums" :key="book.id" class="card">
                         <a :href="`api/books/${book.file}`" target="_blank">
@@ -48,6 +58,32 @@
                   </el-tab-pane>
                 </el-tabs>
 
+                <el-dialog
+                  :title="generateTitle('AddNews')"
+                  :visible.sync="bookVisible"
+                  width="60%"
+                >
+                  <el-upload
+                    list-type="picture-card"
+                    action="api/news/upload"
+                    :before-upload="handleImageSuccess"
+                  >
+                    <i slot="default" class="el-icon-plus" />
+                  </el-upload>
+
+                  <el-form ref="createUserForm" v-loading="loading" :model="createUserForm" status-icon :rules="rules" class="demo-ruleForm">
+                    <el-form-item label="Title" prop="title">
+                      <el-input v-model="createUserForm.title" size="mini" clearable />
+                    </el-form-item>
+                    <el-form-item label="Text" prop="text">
+                      <el-input v-model="createUserForm.text" size="mini" type="textarea" :rows="10" clearable />
+                    </el-form-item>
+                    <el-form-item>
+                      <el-button type="success" @click="submitCreateForm()">Submit</el-button>
+                    </el-form-item>
+                  </el-form>
+
+                </el-dialog>
               </div>
             </div>
           </div>
@@ -60,6 +96,7 @@
 <script>
 
 import axios from 'axios';
+import { generateTitle } from '@/utils/i18n';
 
 export default {
   name: 'Books',
@@ -78,11 +115,31 @@ export default {
       lessons: [],
       homework_id: '',
       ff: '',
+      bookVisible: false,
+      additionalVisible: false,
+      formData: null,
+      loading: false,
+      createUserForm: {
+        title: '',
+        text: '',
+        file: '',
+      },
+      rules: {
+        title: [
+          { required: true, message: 'Required field', trigger: 'change' },
+        ],
+        text: [
+          { required: true, message: 'Required field', trigger: 'change' },
+        ],
+      },
     };
   },
   computed: {
     userid() {
       return this.$store.getters.userId;
+    },
+    role() {
+      return this.$store.getters.roles;
     },
   },
   mounted() {
@@ -93,6 +150,7 @@ export default {
   },
   methods:
       {
+        generateTitle,
         m_percentage: function(value) {
           return parseInt((value * 100) / 1400);
         },
@@ -104,6 +162,38 @@ export default {
               this.albums = response.data.data;
 
               console.log(response.data.data);
+            }).catch(error => {
+              console.log(error);
+            });
+        },
+        handleImageSuccess(file) {
+          this.formData = new FormData();
+          this.formData.append('file', file);
+          this.formData.append('user_id', this.userid);
+          // formData.append('title', 'title');
+          // formData.append('text', 'text');
+        },
+        submitCreateForm() {
+          this.loading = true;
+          const config = {
+            headers: { 'content-type': 'multipart/form-data' },
+          };
+          this.formData.append('title', this.createUserForm.title);
+          this.formData.append('text', this.createUserForm.text);
+
+          axios.post('api/news/create', this.formData, config)
+            .then(response => {
+              console.log('news create');
+              console.log(response.data);
+              this.loading = false;
+              this.$notify({
+                title: 'Success',
+                message: 'News published successfully',
+                type: 'success',
+                duration: 2000,
+              });
+              this.dialogVisible = false;
+              this.getArticles();
             }).catch(error => {
               console.log(error);
             });

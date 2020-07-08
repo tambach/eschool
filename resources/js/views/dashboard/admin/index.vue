@@ -7,6 +7,8 @@
     <!--    </el-row>-->
 
     <!--    <el-row v-if="role.includes('teacher')" :gutter="32" style="margin-bottom:30px;">-->
+    <vue-poll v-bind="options" style="width:60%" @addvote="addVote" />
+
     <el-row :gutter="32" style="margin-bottom:30px;">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
         <todo-list />
@@ -16,7 +18,7 @@
       </el-col>
     </el-row>
 
-    <FullCalendar :options="calendarOptions" />
+    <FullCalendar :options="calendarOptions" @event-selected="eventSelected" />
 
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
@@ -62,6 +64,8 @@ import TodoList from './components/TodoList';
 import BoxCard from './components/BoxCard';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction'; // for selectable
+import VuePoll from 'vue-poll';
 
 const lineChartData = {
   newVisitis: {
@@ -95,21 +99,32 @@ export default {
     TodoList,
     BoxCard,
     FullCalendar,
+    VuePoll,
   },
   data() {
     return {
       lineChartData: lineChartData.newVisitis,
       calendarOptions: {
-        plugins: [dayGridPlugin],
+        plugins: [interactionPlugin, dayGridPlugin],
         initialView: 'dayGridMonth',
         dateClick: this.handleDateClick,
+        selectable: true,
         events: [
-          { title: 'event 1', date: '2020-06-01' },
+          { title: 'event 1', date: '2020-06-01', color: 'yellow', textColor: 'black' },
           { title: 'event 2', date: '2020-06-02' },
           { title: 'event 1', date: '2020-06-01' },
           { title: 'event 2', date: '2020-06-02' },
           { title: 'event 1', date: '2020-06-11' },
           { title: 'event 2', date: '2020-06-12' },
+        ],
+      },
+      options: {
+        question: 'What\'s your favourite <strong>JS</strong> framework?',
+        answers: [
+          { value: 1, text: 'Vue', votes: 53 },
+          { value: 2, text: 'React', votes: 35 },
+          { value: 3, text: 'Angular', votes: 30 },
+          { value: 4, text: 'Other', votes: 10 },
         ],
       },
     };
@@ -124,11 +139,17 @@ export default {
     console.log(this.role);
   },
   methods: {
+    addVote(obj){
+      console.log('You voted ' + obj.value + '!');
+    },
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type];
     },
     handleDateClick: function(arg) {
       alert('date click! ' + arg.dateStr);
+    },
+    eventSelected(){
+      console.log('eventSelected');
     },
   },
 };

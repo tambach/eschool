@@ -119,7 +119,7 @@ export const constantRoutes = [
         path: 'edit',
         component: () => import('@/views/users/SelfProfile'),
         name: 'SelfProfile',
-        meta: { title: 'userProfile', icon: 'user', noCache: true },
+        meta: { title: 'userProfile', icon: 'user', noCache: true, roles: ['admin'] },
       },
     ],
   },

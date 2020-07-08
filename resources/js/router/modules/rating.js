@@ -10,12 +10,6 @@ const ratingRouter = {
     title: 'rating',
     icon: 'chart',
     roles: ['teacher', 'student'],
-    permissions: [
-      {
-        role: 'admin',
-        access: false,
-        redirect: 'login',
-      }],
   },
   children: [
     {
