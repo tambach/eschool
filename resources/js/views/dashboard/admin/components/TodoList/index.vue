@@ -2,7 +2,7 @@
   <section class="todoapp">
     <!-- header -->
     <header class="header">
-      <input class="new-todo" autocomplete="off" placeholder="Todo List" @keyup.enter="addTodo">
+      <input class="new-todo" autocomplete="off" :placeholder="generateTitle('Todo')" @keyup.enter="addTodo">
     </header>
     <!-- main section -->
     <section v-show="todos.length" class="main">
@@ -39,6 +39,7 @@
 
 <script>
 import Todo from './Todo.vue';
+import { generateTitle } from '@/utils/i18n';
 
 const STORAGE_KEY = 'todos';
 const filters = {
@@ -83,6 +84,7 @@ export default {
     },
   },
   methods: {
+    generateTitle,
     setLocalStorage() {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(this.todos));
     },

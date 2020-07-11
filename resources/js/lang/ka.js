@@ -90,6 +90,9 @@ export default {
     administrator: 'ადმინისტრატორი',
     users: 'მომხმარებლები',
     userProfile: 'პროფილი',
+    Subject: 'საგანი',
+    Average: 'საშუალო ქულა',
+    Attendance: 'დასწრება',
   },
   navbar: {
     logOut: 'გასვლა',

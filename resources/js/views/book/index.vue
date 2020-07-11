@@ -27,7 +27,7 @@
                             </span>
                             <h3 class="title" :data-mbid="book.description">{{ book.name }}</h3>
                             <p class="artist">{{ book.description }}</p> <br>
-                            <el-button type="primary"> <a :href="`api/books/${book.file}`" target="_blank">გადმოწერე</a></el-button>
+                            <el-button type="primary"> <a :href="`api/books/${book.file}`" target="_blank">{{ generateTitle('download') }}</a></el-button>
                           </div>
                         </a>
                       </article>
@@ -50,7 +50,7 @@
                             </span>
                             <h3 class="title" :data-mbid="book.description">{{ book.name }}</h3>
                             <p class="artist">{{ book.description }}</p> <br>
-                            <el-button type="primary"> <a :href="`api/books/${book.file}`" target="_blank">გადმოწერე</a></el-button>
+                            <el-button type="primary"> <a :href="`api/books/${book.file}`" target="_blank">{{ generateTitle('download') }}</a></el-button>
                           </div>
                         </a>
                       </article>

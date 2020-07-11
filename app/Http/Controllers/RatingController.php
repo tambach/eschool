@@ -45,8 +45,15 @@ class RatingController extends Controller
 
     public function getAverage(Request $request)
     {
-        $user_id   = $request['user_id'];
+//        $user_id   = $request['user_id'];
+//        $user = User::find($user_id);
+//        $average = $user->rating->groupBy('lesson_id')->pluck('grade')->avg();
+//
+//        return response(['data' => $average ], 200);
+//
+//        }
 
+        $user_id   = $request['user_id'];
         $average = DB::table('rating')
             ->select('lesson_id', 'lessons.name', DB::raw('round(AVG(grade), 1) as grade'), DB::raw('round(RAND()*(100-1)+1, 0) as attendance'))
             ->join('lessons', 'rating.lesson_id', '=', 'lessons.id')

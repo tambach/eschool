@@ -24,7 +24,6 @@ class CreateLessonsTable extends Migration
             $table->unsignedInteger('class_id');
             $table->foreign('class_id', 'class_fk_1001508')->references('id')->on('school_classes');
             $table->unsignedInteger('lecture_id');
-           // $table->foreign('lecture_id', 'lecture_fk_1001496')->references('id')->on('lectures');
             $table->timestamps();
         });
     }

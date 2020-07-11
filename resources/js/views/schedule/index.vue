@@ -8,12 +8,12 @@
             <div class="card-body">
               <div class="col-md-12">
                 <el-table max-height="800" :data="tableData" :header-cell-style="tableHeaderColor" style="width: 100%" :row-class-name="tableRowClassName">
-                  <el-table-column label="Time" prop="time" />
-                  <el-table-column label="Monday" prop="Monday" />
-                  <el-table-column label="Tuesday" prop="Tuesday" />
-                  <el-table-column label="Wednesday" prop="Wednesday" />
-                  <el-table-column label="Thursday" prop="Thursday" />
-                  <el-table-column label="Friday" prop="Friday" />
+                  <el-table-column :label="generateTitle('Time')" prop="time" />
+                  <el-table-column :label="generateTitle('Monday')" prop="Monday" />
+                  <el-table-column :label="generateTitle('Tuesday')" prop="Tuesday" />
+                  <el-table-column :label="generateTitle('Wednesday')" prop="Wednesday" />
+                  <el-table-column :label="generateTitle('Thursday')" prop="Thursday" />
+                  <el-table-column :label="generateTitle('Friday')" prop="Friday" />
                 </el-table>
               </div>
             </div>
@@ -26,6 +26,7 @@
 
 <script>
 import axios from 'axios';
+import { generateTitle } from '@/utils/i18n';
 
 export default {
   name: 'ScheduleList',
@@ -51,11 +52,11 @@ export default {
   },
   created() {
     // this.getCourseList();
-    console.log('fck u');
     this.getTimeTable();
   },
   methods:
       {
+        generateTitle,
         getTimeTable() {
           let url = 'api/schedule/get';
           if (this.role.includes('admin')) {

@@ -7,7 +7,8 @@
     <!--    </el-row>-->
 
     <!--    <el-row v-if="role.includes('teacher')" :gutter="32" style="margin-bottom:30px;">-->
-    <vue-poll v-bind="options" style="width:60%" @addvote="addVote" />
+
+    <!--    <vue-poll v-bind="options" style="width:60%" @addvote="addVote" />-->
 
     <el-row :gutter="32" style="margin-bottom:30px;">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
@@ -17,6 +18,51 @@
         <transaction-table />
       </el-col>
     </el-row>
+
+    <el-button type="success" class="btn btn-psuccess" icon="el-icon-plus" @click="dialog = true">
+      Ajouter un événement
+    </el-button>
+
+    <el-dialog
+      title="Ajouter un événement"
+      :visible.sync="dialog"
+      width="60%"
+    >
+      <el-form ref="createUserForm" v-loading="loading" :model="createUserForm" status-icon :rules="rules" class="demo-ruleForm">
+        <el-form-item label="Nom" prop="title">
+          <el-input v-model="createUserForm.title" size="mini" clearable style="width: 50%" />
+        </el-form-item>
+        <el-form-item prop="type" label="Type">
+          <el-select v-model="createUserForm.type" name="status">
+            <el-option
+              v-for="item in types"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="date" label="Date">
+          <el-date-picker
+            v-model="createUserForm.date"
+            type="datetime"
+          />
+        </el-form-item>
+        <el-form-item prop="class" label="Class">
+          <el-select v-model="createUserForm.class" name="status">
+            <el-option
+              v-for="item in classes"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="success" @click="submitCreateForm()">Submit</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
 
     <FullCalendar :options="calendarOptions" @event-selected="eventSelected" />
 
@@ -64,8 +110,9 @@ import TodoList from './components/TodoList';
 import BoxCard from './components/BoxCard';
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction'; // for selectable
-import VuePoll from 'vue-poll';
+import interactionPlugin from '@fullcalendar/interaction';
+import axios from 'axios'; // for selectable
+// import VuePoll from 'vue-poll';
 
 const lineChartData = {
   newVisitis: {
@@ -99,23 +146,31 @@ export default {
     TodoList,
     BoxCard,
     FullCalendar,
-    VuePoll,
+    // VuePoll,
   },
   data() {
     return {
+      dialog: false,
       lineChartData: lineChartData.newVisitis,
       calendarOptions: {
         plugins: [interactionPlugin, dayGridPlugin],
         initialView: 'dayGridMonth',
         dateClick: this.handleDateClick,
         selectable: true,
+        locale: 'fr',
         events: [
-          { title: 'event 1', date: '2020-06-01', color: 'yellow', textColor: 'black' },
-          { title: 'event 2', date: '2020-06-02' },
-          { title: 'event 1', date: '2020-06-01' },
-          { title: 'event 2', date: '2020-06-02' },
-          { title: 'event 1', date: '2020-06-11' },
-          { title: 'event 2', date: '2020-06-12' },
+          { title: 'Quiz en mathématiques', date: '2020-06-01', color: 'orange', textColor: 'black' },
+          { title: 'Quiz en littérature', date: '2020-06-02', color: 'orange', textColor: 'black' },
+          { title: 'Examen en français', date: '2020-06-01', color: 'red', textColor: 'black' },
+          { title: 'Examen de chimie', date: '2020-06-02', color: 'red', textColor: 'black' },
+          { title: 'Olympiade en anglais', date: '2020-06-11', color: 'yellow', textColor: 'black' },
+          { title: 'Excursion ', date: '2020-06-12', color: 'green', textColor: 'black' },
+          { title: 'Quiz en mathématiques', date: '2020-06-15', color: 'orange', textColor: 'black' },
+          { title: 'Quiz en littérature', date: '2020-06-16', color: 'orange', textColor: 'black' },
+          { title: 'Examen en français', date: '2020-06-18', color: 'red', textColor: 'black' },
+          { title: 'Examen de chimie', date: '2020-06-19', color: 'red', textColor: 'black' },
+          { title: 'Olympiade en anglais', date: '2020-06-23 12:00:00', color: 'yellow', textColor: 'black' },
+          { title: 'Excursion ', date: '2020-06-23 13:12:00', color: 'green', textColor: 'black' },
         ],
       },
       options: {
@@ -125,6 +180,29 @@ export default {
           { value: 2, text: 'React', votes: 35 },
           { value: 3, text: 'Angular', votes: 30 },
           { value: 4, text: 'Other', votes: 10 },
+        ],
+      },
+
+      loading: false,
+      types: [
+        { id: 'red', name: 'Examen' },
+        { id: 'orange', name: 'Quiz' },
+        { id: 'yellow', name: 'Olympiade' },
+        { id: 'green', name: 'Excursion' },
+      ],
+      classes: [],
+      createUserForm: {
+        title: '',
+        type: '',
+        date: '',
+        class: '',
+      },
+      rules: {
+        titles: [
+          { required: true, message: 'Required field', trigger: 'change' },
+        ],
+        dates: [
+          { required: true, message: 'Required field', trigger: 'change' },
         ],
       },
     };
@@ -138,7 +216,30 @@ export default {
     this.role = this.role[0];
     console.log(this.role);
   },
+  created() {
+    this.getClass();
+  },
   methods: {
+    submitCreateForm() {
+      this.calendarOptions.events.push({ title: this.createUserForm.title, date: this.createUserForm.date, color: this.createUserForm.type, textColor: 'black' });
+      this.dialog = false;
+      this.$notify({
+        title: 'Success',
+        message: 'L\'événement a ajouté avec succès',
+        type: 'success',
+        duration: 2000,
+      });
+    },
+    getClass() {
+      axios.post('api/rating/class')
+        .then(response => {
+          console.log(response.data);
+          this.classes = response.data.data;
+          this.classes.unshift({name: 'Toutes les classes'});
+        }).catch(error => {
+          console.log(error);
+        });
+    },
     addVote(obj){
       console.log('You voted ' + obj.value + '!');
     },

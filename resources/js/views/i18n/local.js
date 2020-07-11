@@ -19,6 +19,7 @@ export default {
       one: 'One',
       two: 'Two',
       three: 'Three',
+      Todo: 'Todo List',
     },
   },
   fr: {
@@ -40,6 +41,7 @@ export default {
       one: 'un',
       two: 'deux',
       three: 'trois',
+      Todo: 'Liste des choses à faire',
     },
   },
   ru: {

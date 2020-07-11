@@ -6,7 +6,7 @@
   >
     <el-table-column :label="generateTitle('Subject')" style="max-height: 220px;">
       <template slot-scope="scope">
-        {{ scope.row && scope.row.name | orderNoFilter }}
+        {{ generateTitle(scope.row.name) }}
       </template>
     </el-table-column>
     <el-table-column :label="generateTitle('Average')" align="center">
@@ -16,9 +16,9 @@
         </el-tag>
       </template>
     </el-table-column>
-    <el-table-column label="Attendance" align="center">
+    <el-table-column :label="generateTitle('Attendance')" align="center">
       <template slot-scope="scope">
-        <el-tag :type="scope.row.attendance >60 ? 'success' : 'danger'">
+        <el-tag :type="scope.row.attendance >70 ? 'success' : 'danger'">
           {{ scope.row && scope.row.attendance }}%
         </el-tag>
       </template>

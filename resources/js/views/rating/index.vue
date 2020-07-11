@@ -16,7 +16,7 @@
                           <el-option
                             v-for="item in lessons"
                             :key="item.id"
-                            :label="item.name"
+                            :label="generateTitle(item.name)"
                             :value="item.id"
                           />
                         </el-select>
@@ -231,7 +231,7 @@ export default {
           let count = 0;
           columns.forEach((column, index) => {
             if (index === 0) {
-              sums[index] = 'Average';
+              sums[index] = generateTitle('Average');
               return;
             }
             const values = data.map(item => Number(item[column.property]));
@@ -246,7 +246,7 @@ export default {
                 }
               }, 0) / count;
             } else {
-              sums[index] = 'N/A';
+              sums[index] = '';
             }
           });
           return sums;
