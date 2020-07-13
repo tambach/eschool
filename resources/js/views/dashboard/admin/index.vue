@@ -235,7 +235,7 @@ export default {
         .then(response => {
           console.log(response.data);
           this.classes = response.data.data;
-          this.classes.unshift({name: 'Toutes les classes'});
+          this.classes.unshift({ name: 'Toutes les classes' });
         }).catch(error => {
           console.log(error);
         });

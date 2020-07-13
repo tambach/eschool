@@ -24,7 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->command('year:update')
+                  ->cron('0 0 1 9 *')
+                  ->appendOutputTo('../taskscheduler.log');
     }
 
     /**

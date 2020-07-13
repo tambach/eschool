@@ -47,6 +47,12 @@ Route::get('books/{file}', 'BookController@download');
 Route::post('books/get', 'BookController@getBooks');
 
 
+Route::delete('users/{id}', 'UserController@softdelete');
+Route::get('users/softdeleted','UserController@softDeleted');
+Route::patch('restoreusers/{id}','UserController@restore');
+Route::post('student/create', 'UserController@createStudent');
+
+
 Route::get('articles/get', 'NewsController@getAll');
 Route::post('articles/byid', 'NewsController@getById');
 Route::post('news/create', 'NewsController@addNews');
@@ -90,6 +96,7 @@ Route::post('/homework/upload', 'HomeWorkController@uploadFile');
 Route::post('/homework/post', 'HomeWorkController@postHomeWork');
 Route::post('/homework/getbyid', 'HomeWorkController@filesbyid');
 
+Route::get('/students/getall', 'UserController@getAllStudents');
 
 
 // Fake APIs

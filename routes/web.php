@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmailMailable;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('sendEmail', function(){
+
+    Mail::to('tbachaliashvili@gmail.com')->send(new SendEmailMailable('some@gmail.com', '234edfs5'));
+
+    return 'Email sent successfully';
+    // return view('welcome');
+
+});
+
 
 Route::group(['middleware' => 'web'], function () {
     Route::get(env('LARAVUE_PATH'), 'LaravueController@index')->where('any', '.*')->name('laravue');

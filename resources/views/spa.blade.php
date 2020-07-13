@@ -29,7 +29,15 @@
     <div id="app">
         <app></app>
     </div>
-
+   <p>Bienvenue dans le système de gestion scolaire pour les écoles publiques géorgiennes</p>
+    <br>
+   <p> Il s'agit de vos identifiants pour vous connecter au système</p>
+    <br>
+   <p> Courriel:  {{ $mail }} </p>
+    <br>
+    <p>Mot de passe:  {{ $password }} </p>
+    <br>
+    Il est fortement recommandé de changer le mot de passe après s'être connecté au système.
     <script src=/static/tinymce4.7.5/tinymce.min.js></script>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
